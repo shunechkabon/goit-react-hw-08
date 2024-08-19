@@ -1,0 +1,24 @@
+.contactItem {
+    list-style: none;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    gap: 60px;
+    padding: 10px;
+}
+
+.contactItem div {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.contactItem div p {
+    margin: 0;
+}
+
+.contactItem button {
+    /* width: 90px; */
+    height: 50px;
+}
