@@ -1,7 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { login } from '../../redux/auth/operations';
+import { useNavigate } from 'react-router-dom';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import s from './LoginForm.module.css';
 
 const validationSchema = Yup.object().shape({
@@ -15,11 +18,28 @@ const validationSchema = Yup.object().shape({
 
 const LoginForm = () => {
     const dispatch = useDispatch();
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const navigate = useNavigate();
 
-    const handleSubmit = (values, actions) => {
-        dispatch(login(values));
-        actions.resetForm();
+    const handleSubmit = async (values, actions) => {
+        const trimmedValues = {
+            email: values.email.trim(),
+            password: values.password.trim(),
+        };
+        try {
+            await dispatch(login(trimmedValues)).unwrap();
+        } catch (error) {
+            console.error('Login error:', error);
+        } finally {
+            actions.resetForm();
+        }
     };
+
+    useEffect(() => {
+    if (isLoggedIn) {
+        navigate('/contacts');
+        }
+    }, [isLoggedIn, navigate]);
 
     return (
         <Formik
@@ -27,23 +47,21 @@ const LoginForm = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ isSubmitting }) => (
-                <Form className={s.form}>
-                    <div>
-                        <label htmlFor="email">Email</label>
-                        <Field name="email" type="email" />
-                        <ErrorMessage className={s.error} name="email" component="div" />
-                    </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <Field name="password" type="password" />
-                        <ErrorMessage className={s.error} name="password" component="div" />
-                    </div>
-                    <button type="submit" disabled={isSubmitting}>
-                        Login
-                    </button>
-                </Form>
-            )}
+            <Form className={s.form}>
+                <div>
+                    <label htmlFor="email">Email</label>
+                    <Field name="email" type="email" autoComplete="email"/>
+                    <ErrorMessage className={s.error} name="email" component="div" />
+                </div>
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <Field name="password" type="password" autoComplete="current-password"/>
+                    <ErrorMessage className={s.error} name="password" component="div" />
+                </div>
+                <button type="submit" >
+                    Login
+                </button>
+            </Form>
         </Formik>
     );
 };

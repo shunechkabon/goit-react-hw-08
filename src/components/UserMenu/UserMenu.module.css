@@ -1,0 +1,18 @@
+.userMenu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.userMenu p {
+    font-style: italic;
+    font-weight: 600;
+}
+
+.userMenu p span {
+    color: #646cff;
+}
+
+.userMenu button {
+    height: 40px;
+}
