@@ -24,6 +24,7 @@
     width: 260px;
     margin-top: 4px;
     margin-bottom: 14px;
+    transition: border 0.25s;
 }
 
 .form div input:hover {

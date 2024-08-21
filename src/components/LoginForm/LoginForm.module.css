@@ -1,0 +1,35 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 300px;
+    align-items: center;
+}
+
+.form div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form div input {
+    height: 30px;
+    width: 260px;
+    transition: border 0.25s;
+}
+
+.form div input:hover {
+    border: 2px solid #646cff;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.form button {
+    width: 110px;
+    margin-top: 20px;
+}
