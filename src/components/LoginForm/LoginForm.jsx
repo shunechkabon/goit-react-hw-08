@@ -28,11 +28,10 @@ const LoginForm = () => {
         };
         try {
             await dispatch(login(trimmedValues)).unwrap();
+            actions.resetForm(); 
         } catch (error) {
             console.error('Login error:', error);
-        } finally {
-            actions.resetForm();
-        }
+        } 
     };
 
     useEffect(() => {
